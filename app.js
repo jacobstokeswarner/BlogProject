@@ -18,6 +18,8 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+// Get Requests
+
 app.get("/", (req, res) => {
   res.render("home", {
     homeContent: homeStartingContent,
@@ -41,6 +43,20 @@ app.get("/compose", (req, res) => {
   res.render("compose");
 });
 
+app.get("/posts/:postId", (req, res) => {
+  let requestedTitle = req.params.postId;
+  posts.forEach((post) => {
+    if (post.title === requestedTitle) {
+      console.log("match found");
+    }else{
+      console.log("no match found");
+    }
+  });
+  res.redirect("/");
+});
+
+// Post requests
+
 app.post("/compose", (req, res) => {
   const post = {
     title: req.body.postTitle,
@@ -50,6 +66,8 @@ app.post("/compose", (req, res) => {
   posts.push(post);
   res.redirect("/");
 });
+
+// Server is Listening at: 
 
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
