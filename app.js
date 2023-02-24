@@ -49,11 +49,9 @@ app.get("/posts/:postId", (req, res) => {
   posts.forEach((post) => {
     const storedTitle = _.lowerCase(post.title);
     if (storedTitle === requestedTitle) {
-      const usedTitle = storedTitle;
-      const usedContent = post.content;
       res.render("post",{
-        title: usedTitle,
-      content: usedContent
+        title: post.title,
+      content: post.content
       });
     } else{
       res.render("post",{
